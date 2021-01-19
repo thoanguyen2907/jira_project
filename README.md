@@ -1,3 +1,45 @@
+This is the Jira project cloned applied React + Redux + Redux Saga + Ant Design + Formik + Yup + Tinymce-react + react router-dom 
+
+To Login: 
+username: cyberlearn@gmail.com
+
+password: 123456 
+
+Features: 
+
+Use both React Hooks and React Class 
+
+Apply HOC to reusable components 
+
+Call Api , handle asynchoronism by Redux Saga. 
+
+Create Project ||  Edit Project || Delete Project 
+
+Add members to project 
+
+Store data in redux state
+
+Apply Ant Design to build UI. 
+
+Create Task  || Edit Task || Delete Task
+
+Assign member to task, Delete member 
+
+Assign member to task 
+
+Assign member to task, 
+
+Estimate time, select status, priority 
+
+Drag and Drop task into different category. 
+
+Get All Task after edit/create. 
+
+Validation. 
+
+![](https://media.giphy.com/media/nvQsWZL7b6ZJ9EpqZa/giphy.gif)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

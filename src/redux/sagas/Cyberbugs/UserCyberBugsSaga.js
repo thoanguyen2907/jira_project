@@ -117,12 +117,14 @@ export function * theoDoiGetUserByProjectId(){
 }
 
 function * getAllUserSaga(action){  
+
+
     yield put({
         type: DISPLAY_LOADING
     })
     yield delay(1000)
     try {
-        const {data, status} = yield call(()=> userService.getAllUser()) ; 
+        const {data, status} = yield call(()=> userService.getUser(action.keyword)) ; 
        
         if(status === STATUSCODE.SUCCESS){
            yield put ({

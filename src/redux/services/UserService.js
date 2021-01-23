@@ -14,8 +14,8 @@ export class UserService extends BaseService{
     getUserByProjectId = (idProject) => {
         return this.get(`Users/getUserByProjectId?idProject=${idProject}`)
     } 
-    getAllUser = () => {
-        return this.get("Users/getUser"); 
+    getAllUser = (keyword) => {
+        return this.get(`Users/getUser?keyword=${keyword}`); 
     }
     deleteUserById = (userId) => {
         return this.delete(`Users/deleteUser?id=${userId}`)

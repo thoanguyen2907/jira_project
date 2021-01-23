@@ -281,21 +281,22 @@ export default function ModalCyberBugs() {
                         plugins: [
                             'advlist autolink lists link image charmap print preview anchor',
                             'searchreplace visualblocks code fullscreen',
-                            'insertdatetime media table paste code help wordcount'
+                            'insertdatetime media table paste code help wordcount paste tinycomments'
                         ],
+                        menu: {
+    tc: {
+      title: 'TinyComments',
+      items: 'addcomment showcomments deleteallconversations'
+    }
+  },
+  tinycomments_mode: 'embedded',
+  tinycomments_author: 'Author',
                         toolbar:
                             'undo redo | formatselect | bold italic backcolor | \
                             alignleft aligncenter alignright alignjustify | \
                             bullist numlist outdent indent | removeformat | help',
                             tinycomments_mode: 'embedded',
                             tinycomments_author: currentAuthor,
-                            tinycomments_can_edit_comment: function (req, done, fail) {
-    // var allowed = req.comment.author === currentAuthor;
-    // done({
-    //   canEdit: allowed || currentAuthor === '<Admin user>'
-    // });
-    console.log(req)
-  }
                         }}
                         onEditorChange={(content, editor) => {
                             // const jsxContent = ReactHtmlParser(content);

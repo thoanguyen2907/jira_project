@@ -66,6 +66,7 @@ export function* theoDoiGetTaskDetailSaga(){
 }
 
 function * updateTaskStatusSaga (action){
+    console.log("action", action)
     try {     
         //Gọi api lấy dữ liệu về
         const {data,status} = yield call(() => taskService.updateStatusTask(action.taskStatusUpdate));

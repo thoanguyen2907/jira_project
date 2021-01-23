@@ -27,7 +27,12 @@ const initialState = {
     case SET_SUBMIT_CREATE_PROJECT: 
         state.callBackSubmit = action.submitFunction;
         return {...state}
+    case "SET_SUBMIT_EDIT_USER_INFO": 
+    state.callBackSubmit = action.submitFunction;
+    return {...state}
+    case "OPEN_FORM_EDIT_USER_INFO": 
 
+        return {...state, visible: true, ComponentDrawerContent: action.Component, title: action.title}
     default:
         return state
     }

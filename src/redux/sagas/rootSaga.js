@@ -10,6 +10,8 @@ import * as TaskTypeSaga from './Cyberbugs/TaskTypeSaga';
 import * as PrioritySaga from './Cyberbugs/PrioritySaga'; 
 import * as TaskSaga from './Cyberbugs/TaskSaga'; 
 import * as StatusSaga from './Cyberbugs/StatusSaga'; 
+import * as CommentSaga from './Cyberbugs/CommentSaga'; 
+import * as SignUpSaga from './Cyberbugs/SignUpSaga'; 
 export function * rootSaga(){
 //    yield fork(getTaskAPI);  
 
@@ -23,10 +25,15 @@ yield all([
     ProjectSaga.theoDoiDeleteProjectSaga(), 
     ProjectSaga.theoDoiGetProjectDetailSaga(),
     ProjectSaga.theoDoiGetAllProjectSaga(), 
+
     Cyberbugs.theoDoiGetUser(),
     Cyberbugs.theoDoiAddUser(),
     Cyberbugs.theoDoiGetUserByProjectId(),
     Cyberbugs.theoDoiDeleteUserProject(),
+    Cyberbugs.theoDoiGetAllUserSaga(),
+    Cyberbugs.theoDoiDeleteUserFromListSaga(), 
+    Cyberbugs.theoDoiEditUserInfoSaga(), 
+    
     TaskTypeSaga.theoDoiGetAllTypeTaskSaga(),
     PrioritySaga.theoDoiGetAllPriorityList(),
     TaskSaga.theoDoiCreateTaskSaga(),
@@ -34,7 +41,16 @@ yield all([
     TaskSaga.theoDoiUpdateTaskStatusSaga(), 
     TaskSaga.theoDoiHandleChangePostApi(), 
 
-    StatusSaga.theoDoiGetAllStatusSaga()
+    StatusSaga.theoDoiGetAllStatusSaga(),
+
+    CommentSaga.theoDoiInsertACommentSaga(),
+    CommentSaga.theoDoiGetAllCommentSaga(),
+    CommentSaga.theoDoiEditACommentSaga(),
+    CommentSaga.theoDoiDeleteACommentSaga(),
+
+    SignUpSaga.theoDoiUserSignUpSaga()
+
+
 ])
 
 

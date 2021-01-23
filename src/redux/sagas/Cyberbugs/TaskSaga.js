@@ -48,10 +48,10 @@ export function* theoDoiCreateTaskSaga(){
 function * getTaskDetailSaga (action){
     try {     
         //Gọi api lấy dữ liệu về
+        yield delay(600)
         const {data,status} = yield call(() => taskService.getTaskDetail(action.taskId)); 
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
-            console.log("GET_TASK_DETAIL_SAGA",  status);
             yield put ({
                 type : "GET_TASK_DETAIL_REDUCER", 
                 taskDetailModal: data.content
@@ -89,7 +89,7 @@ export function* theoDoiUpdateTaskStatusSaga(){
 }
 
 function * handleChangePostApi(action) {
-    console.log(action);
+
 //gọi action làm thay đổi taskDetail modal 
 switch(action.actionType) {
     case CHANGE_TASK_MODAL: {

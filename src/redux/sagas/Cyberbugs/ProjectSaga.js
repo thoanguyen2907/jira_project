@@ -136,7 +136,7 @@ function * getProjectDetailSaga (action){
         const { status , data} = yield call(() => projectService.getProjectDetail(action.id)); 
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
-            console.log("GET_PROJECT_DETAIL_SAGA",  status)
+ 
             openNotificationWithIcon('success', 'Get Project Detail', 'Lấy Dự Án Thành Công !!')
             yield put ({
                 type: "PUT_PROJECT_DETAIL", 

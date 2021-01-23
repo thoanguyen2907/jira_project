@@ -11,18 +11,25 @@ export default function ModalCyberBugs() {
     const { arrPriority } = useSelector(state => state.PriorityReducer);
     const { arrTaskType } = useSelector(state => state.TaskTypeReducer);
     const {projectDetail} = useSelector(state => state.ProjectReducer); 
+    const {openEditor} = useSelector(state => state.TaskReducer); 
     const [historyContent, setHistoryContent] = useState(taskDetailModal.description);
     const [content, setContent] = useState(taskDetailModal.description);
-    const [visibleEditor, setVisibleEditor] = useState(false)
+    const [comment, setComment] = useState('');
+    const [visibleEditor, setVisibleEditor] = useState(false); 
+    // const [visibleCommentEdit, setVisibleCommentEdit] = useState(openEditor); 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch({ type: GET_ALL_STATUS_SAGA });
         dispatch({ type: GET_ALL_PRIORITY_LIST_SAGA });
         dispatch({ type: GET_ALL_TYPE_TASK_SAGA}); 
-    }, [])
+        dispatch({
+            type: "GET_ALL_COMMENTS_SAGA", 
+            taskId: taskDetailModal.taskId
+        })
+    }, [taskDetailModal.taskId])
 
-    console.log('taskDetailModal', taskDetailModal);
+    // console.log('taskDetailModal', taskDetailModal);
 
     const renderDescription = () => {
         const jsxDescription = ReactHtmlParser(taskDetailModal.description);
@@ -131,7 +138,9 @@ export default function ModalCyberBugs() {
         </div>
         </div>
     }
-    
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
     return (
         <div className="modal fade" id="infoModal" tabIndex={-1} role="dialog" aria-labelledby="infoModal" aria-hidden="true">
                 <div className="modal-dialog modal-info">
@@ -199,38 +208,129 @@ export default function ModalCyberBugs() {
                                                 <div className="avatar">
                                                     <img src={require("../../../assets/img/download (1).jfif")} alt="hinhAnh" />
                                                 </div>
-                                                <div className="input-comment">
-                                                    <input type="text" placeholder="Add a comment ..." />
-                                                    <span>
-                                                        <span style={{ fontWeight: 500, color: 'gray' }}>Protip:</span>
-                                                        <span>press
-                        <span style={{ fontWeight: 'bold', background: '#ecedf0', color: '#b4bac6' }}>M</span>
-                        to comment</span>
-                                                    </span>
-                                                </div>
+                                <form className="input-comment" onSubmit = {handleSubmit}>
+                             <Editor
+                    name="comment"
+                    initialValue ='Add a comment'
+                    init={{
+                        selector: 'textarea#myTextArea',
+                        height: 150,
+                        menubar: false,
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar:
+                            'undo redo | formatselect | bold italic backcolor | \
+                            alignleft aligncenter alignright alignjustify | \
+                            bullist numlist outdent indent | removeformat | help'
+                        }}
+                        onEditorChange={(content, editor) => {
+                            // const jsxContent = ReactHtmlParser(content);
+                            
+                            setComment(content); 
+            
+                        }}
+                />
+                <div className="btn-comment-group mt-2">
+                <button className="btn btn-primary" type="submit" onClick={()=>{
+                             dispatch({
+                                type: "INSERT_A_COMMENT_SAGA",
+                                comment : {
+                                    "taskId": taskDetailModal.taskId,
+                                    "contentComment": comment,
+                                    "projectId" :taskDetailModal.projectId
+                                }
+
+                            })
+                        
+                }}>Save</button>
+                <button className="btn btn-default ml-3" type="button" onClick={()=>{
+                    setComment('')
+                }}>Cancel</button>
+                </div>    
+                                                </form>
                                             </div>
                                             <div className="lastest-comment">
                                                 <div className="comment-item">
-                                                    <div className="display-comment" style={{ display: 'flex' }}>
-                                                        <div className="avatar">
-                                                            <img src={require("../../../assets/img/download (1).jfif")} alt="hinhAnh" />
-                                                        </div>
-                                                        <div>
-                                                            <p style={{ marginBottom: 5 }}>
-                                                                Lord Gaben <span>a month ago</span>
-                                                            </p>
-                                                            <p style={{ marginBottom: 5 }}>
-                                                                Lorem ipsum dolor sit amet, consectetur
-                                                                adipisicing elit. Repellendus tempora ex
-                                                                voluptatum saepe ab officiis alias totam ad
-                                                                accusamus molestiae?
-                        </p>
-                                                            <div>
-                                                                <span style={{ color: '#929398' }}>Edit</span>
-                          •
-                          <span style={{ color: '#929398' }}>Delete</span>
+                                                    <div className="display-comment">
+                                                            {taskDetailModal.lstComment?.map((item, index) => {
+                                                              let currentAuthor = item.user?.name; 
+                                                                 
+                                                                return <div key={index} className="row my-3">
+                                                                <div className="col-1">
+                                                                <div className="avatar">
+                                                                         <img src={item.user?.avatar} alt="hinhAnh"/>
+                                                                       
+                                                                </div>
+                                                                </div>
+                                                                <div className = "col-8">
+                                                                <p style={{ marginBottom: 5 }}>
+                                                                        {item.user?.name}
+                                                                    </p>
+                         {openEditor ?  <div>
+                     <Editor
+                    name="commentEdit"
+                    initialValue ='Edit a comment'
+                    init={{
+                        // selector: `comment-${item.id}`,
+                        height: 150,
+                        menubar: false,
+                        hidden_input: false,
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar:
+                            'undo redo | formatselect | bold italic backcolor | \
+                            alignleft aligncenter alignright alignjustify | \
+                            bullist numlist outdent indent | removeformat | help',
+                            tinycomments_mode: 'embedded',
+                            tinycomments_author: currentAuthor,
+                            tinycomments_can_edit_comment: function (req, done, fail) {
+    // var allowed = req.comment.author === currentAuthor;
+    // done({
+    //   canEdit: allowed || currentAuthor === '<Admin user>'
+    // });
+    console.log(req)
+  }
+                        }}
+                        onEditorChange={(content, editor) => {
+                            // const jsxContent = ReactHtmlParser(content);
+                            setComment(content); 
+                        }} />
+                        <div className="btn-edit-comment">
+                            <button className = "button">Save Comment</button>
+                            <button className = "button">Cancel Comment</button>
+                        </div>
+                 </div>: <div> {ReactHtmlParser(item?.contentComment)}
+                 <span style={{ color: '#444422' }} onClick={()=>{
+                                                                    dispatch({
+                                                                        type: "OPEN_EDIT_COMMENT",
+                                                                        id: item.id
+                                                                    })
+                                                                }} >Edit</span>                       
+                                                                <span style={{ color: '#929398' }} className="ml-3"
+                                                               onClick = {()=>{
+                                                                   dispatch({
+                                                                       type: "DELETE_A_COMMENT_SAGA", 
+                                                                       id: item.id, 
+                                                                       taskId : taskDetailModal?.taskId,
+                                                                       projectId: taskDetailModal?.projectId
+                                                                   })
+                                                               }}
+                                                                >Delete</span>
+                 </div>}
+                                                               
+                                                               
                                                             </div>
-                                                        </div>
+                                                            </div> 
+                                                            })}
+                                                       
+                                                           
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -259,7 +359,6 @@ export default function ModalCyberBugs() {
                                             <div>
                                             {
                                                 taskDetailModal.assigness?.map((user, index) => {
-                                                    console.log(user)
                                                     return <div key={index} style={{ display: 'flex' }} className="item">
                                                         <div className="avatar">
                                                             <img src={user.avatar} alt={user.avatar} />

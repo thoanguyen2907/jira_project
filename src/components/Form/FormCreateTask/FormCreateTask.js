@@ -137,7 +137,6 @@ for (let i = 10; i < 36; i++) {
                             placeholder="Please select"
                             defaultValue={[]}
                             onChange={(values) => {
-                                console.log(values)
                                 setFieldValue("listUserAsign",values)
                             }}
                             onSearch = {(value) => {console.log(value)}}

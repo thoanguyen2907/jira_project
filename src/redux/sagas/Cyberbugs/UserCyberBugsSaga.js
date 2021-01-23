@@ -1,14 +1,15 @@
 
 import { takeEvery } from 'redux-saga/effects';
 
-import { fork, take, call, takeLatest, put, delay } from 'redux-saga/effects';
+import { fork, take, call, takeLatest , put, delay } from 'redux-saga/effects';
 import axios from 'axios';
-import {ADD_USER_PROJECT_API, DELETE_USER_PROJECT_API, GET_LIST_PROJECT_SAGA, GET_USER_BY_PROJECT_ID, GET_USER_BY_PROJECT_ID_SAGA, USER_SIGNIN_API, USLOGIN} from './../../constants/Cyberbugs/Cyberbugs'; 
+import {ADD_USER_PROJECT_API, CLOSE_DRAWER, DELETE_USER_PROJECT_API, GET_LIST_PROJECT_SAGA, GET_USER_BY_PROJECT_ID, GET_USER_BY_PROJECT_ID_SAGA, USER_SIGNIN_API, USLOGIN} from './../../constants/Cyberbugs/Cyberbugs'; 
 import { cyberbugsService } from '../../services/CyberbugsService'; 
 import { DISPLAY_LOADING, HIDE_LOADING } from '../../constants/Loading/LoadingConst';
 import { STATUSCODE, TOKEN, USER_LOGIN } from '../../../util/constants/settingSystem';
 import {history} from '../../../util/history/history';
 import { userService } from '../../services/UserService';
+import { openNotificationWithIcon } from '../../../util/Notification/notificationCyberbugs';
 //Quản lý các action saga
 
 function * signinSaga(action){
@@ -22,13 +23,13 @@ try {
   //lưu vào local store khi đăng nhập sucessfull
   localStorage.setItem(TOKEN, data.content.accessToken); 
   localStorage.setItem(USER_LOGIN,JSON.stringify(data.content)); 
-// yield put(push("/home")); 
+
 // action.userLogin.history.push("./home");
     yield put({
         type: USLOGIN,
         userLogin: data.content
     })
-history.push("/");
+history.push("/projectmanagement");
 
 } catch(err){
     console.log(err.response.data)
@@ -94,6 +95,8 @@ function * deleteUserProject(action){
 export function * theoDoiDeleteUserProject(){
     yield takeLatest(DELETE_USER_PROJECT_API, deleteUserProject)
 }
+
+
 function * getUserByProjectID(action){
     console.log(action);
     try {
@@ -112,3 +115,91 @@ function * getUserByProjectID(action){
 export function * theoDoiGetUserByProjectId(){
     yield takeLatest(GET_USER_BY_PROJECT_ID_SAGA, getUserByProjectID)
 }
+
+function * getAllUserSaga(action){  
+    yield put({
+        type: DISPLAY_LOADING
+    })
+    yield delay(1000)
+    try {
+        const {data, status} = yield call(()=> userService.getAllUser()) ; 
+       
+        if(status === STATUSCODE.SUCCESS){
+           yield put ({
+            type: "GET_ALL_USER_REDUCER", 
+            arrAllUser : data.content
+        })
+        }
+     }  catch(error){
+        console.log(error.response.data);
+     }
+     yield put ({
+         type: HIDE_LOADING
+     })
+}
+
+export function * theoDoiGetAllUserSaga(){
+    yield takeLatest("GET_ALL_USERS_SAGA", getAllUserSaga)
+}
+
+
+
+function * deleteUserFromListSaga(action){  
+   yield put({
+       type: DISPLAY_LOADING
+   })
+   yield delay(600)
+    try {
+        const {data, status} = yield call(()=> userService.deleteUserById(action.userId)) ; 
+        if(status === STATUSCODE.SUCCESS){
+           yield put ({
+            type: "GET_ALL_USERS_SAGA", 
+        })
+        openNotificationWithIcon("success", "Delete User", "Delete User From List Successfully !!! ")
+        }
+     }  catch(error){
+        openNotificationWithIcon("warning", "Delete User", "Delete User From List Failed !!! ")
+        console.log(error.response.data);
+     }
+    yield put({
+        type: HIDE_LOADING
+    })
+}
+
+export function * theoDoiDeleteUserFromListSaga(){
+    yield takeLatest("DELETE_USER_FROM_LIST_SAGA",deleteUserFromListSaga)
+}
+
+
+function * editUserInfoSaga(action){  
+    console.log("action", action);
+    yield put({
+        type: DISPLAY_LOADING
+    })
+    yield delay(600)
+     try {
+         const {data, status} = yield call(()=> userService.editUserInfo(action.userInfo)) ; 
+         if(status === STATUSCODE.SUCCESS){
+            yield put ({
+             type: "GET_ALL_USERS_SAGA", 
+         })
+         openNotificationWithIcon("success", "Edit User", "Edit User Info Successfully !!! ")
+         }
+      }  catch(error){
+         openNotificationWithIcon("warning", "Edit User", "Edit User Info List Failed !!! ")
+         console.log(error.response.data);
+      }
+      yield put({
+          type:CLOSE_DRAWER
+      })
+
+     yield put({
+         type: HIDE_LOADING
+     })
+    
+ }
+export function * theoDoiEditUserInfoSaga(){
+    yield takeLatest("EDIT_USER_INFO_SAGA",editUserInfoSaga)
+}
+
+

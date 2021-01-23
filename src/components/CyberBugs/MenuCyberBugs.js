@@ -6,7 +6,7 @@ const MenuCyberBugs = () => {
             <div className="menu">
                 <div className="account">
                     <div className="avatar">
-                        <img src={require("../../assets/img/download.jfif")} alt="hinh anh" />
+                        <img src={require("../../assets/img/download (1).jfif")} alt="hinh anh" />
                     </div>
                     <div className="account-info">
                         <p>CyberLearn.vn</p>
@@ -25,6 +25,10 @@ const MenuCyberBugs = () => {
                     <div>
                         <i className="fa fa-cog mr-3" />
                         <NavLink to="/projectmanagement">Project Management</NavLink>
+                    </div>
+                    <div>
+                        <i className="fa fa-cog mr-3" />
+                        <NavLink to="/admin/usermanagement">User Management</NavLink>
                     </div>
                 </div>
                 <div className="feature">

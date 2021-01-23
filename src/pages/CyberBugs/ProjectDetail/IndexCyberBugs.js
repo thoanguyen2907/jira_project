@@ -8,7 +8,6 @@ import './../../../index.css';
 
 export default function IndexCyberBugs(props) {
     let {projectDetail} = useSelector(state => state.ProjectReducer); 
-    console.log("params",  props.match.params.projectId);
     const dispatch = useDispatch(); 
     useEffect(() => {
         const projectId = props.match.params.projectId;

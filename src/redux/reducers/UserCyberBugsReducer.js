@@ -10,7 +10,9 @@ if(localStorage.getItem(USER_LOGIN)){
 const stateDefault = {
     userLogin: usLogin,
     userSearch: [],
-    arrUser: [] //array user for select create task
+    arrUser: [],  //array user for select create task,
+    arrAllUser : [],
+    userEditInfo : {}
 }
  const UserLoginCyberBugsReducer = (state = stateDefault, action) =>{
     switch(action.type){
@@ -25,6 +27,17 @@ const stateDefault = {
         case GET_USER_BY_PROJECT_ID : 
         state.arrUser = action.arrUser; 
         return {...state}
+
+        case "GET_ALL_USER_REDUCER": 
+        state.arrAllUser = action.arrAllUser; 
+
+        return {...state}
+
+        case "USER_EDIT_INFO_REDUCER": 
+        state.userEditInfo = action.userEditInfo; 
+        console.log("state.userEditInfo" , state.userEditInfo)
+        return {...state}
+
         default: return {...state}
     }
 }

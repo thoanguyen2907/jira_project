@@ -23,7 +23,8 @@ const initialState = {
     "typeId": 1,
     "priorityId": 1,
     "projectId": 109
-  }
+  }, 
+  openEditor : false 
 }
 
  const TaskReducer = (state = initialState, action) => {
@@ -43,7 +44,6 @@ const initialState = {
         // }
         case CHANGE_ASSINGEES : {
           state.taskDetailModal.assigness = [...state.taskDetailModal.assigness,action.userSelect];
-          console.log("state task modal assigness", state.taskDetailModal.assigness);
           // console.log('state',state)
           return {...state}
         }
@@ -51,6 +51,27 @@ const initialState = {
           state.taskDetailModal.assigness = [...state.taskDetailModal.assigness.filter(us => us.id !== action.userId)];
           return {...state}
         }
+        case "INSERT_COMMENT": {
+
+          state.taskDetailModal.lstComment = [...state.taskDetailModal.lstComment, action.comment]; 
+          console.log(state.taskDetailModal.lstComment);
+          return {...state}
+        }
+        case "GET_ALL_COMMENTS_REDUCER": {
+          state.taskDetailModal.lstComment =  action.listComment; 
+        
+          return {...state}
+        }
+        case "OPEN_EDIT_COMMENT":
+          let {id} = action; 
+          let indexOpenCommentEdit = state.taskDetailModal.lstComment.findIndex(item => id === item.id); 
+          console.log(indexOpenCommentEdit);
+          if(indexOpenCommentEdit !== -1){
+            state.openEditor = {...state.openEditor, openEditor: true}
+          } else {
+            state.openEditor = {...state.openEditor, openEditor: false}
+          }
+        return { ...state }
     default:
       return {...state}
     }

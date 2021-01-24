@@ -1,5 +1,6 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { STATUSCODE } from "../../../util/constants/settingSystem";
+import { openNotificationWithIcon } from "../../../util/Notification/notificationCyberbugs";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/Loading/LoadingConst";
 import { commentService } from "../../services/CommentService";
 
@@ -10,9 +11,10 @@ function * getAllCommentSaga (action) {
     try{
         const {data, status} = yield call(() => commentService.getAllComment(action.taskId));
         if(status === STATUSCODE.SUCCESS){
+           
             yield put ({
                 type: "GET_ALL_COMMENTS_REDUCER", 
-                listComment : data.content
+                arrComment : data.content
             })
 
         }
@@ -66,7 +68,8 @@ export function* theoDoiInsertACommentSaga() {
 }
 function* editACommentSaga(action) {
     let {taskId, id, contentComment, projectId} = action; 
-    return; 
+    console.log(action);
+
     //HIỂN THỊ LOADING
     yield put({
         type: DISPLAY_LOADING
@@ -74,16 +77,18 @@ function* editACommentSaga(action) {
     yield delay(1200)
     try {
         //Gọi api lấy dữ liệu về     
-        const { data, status } = yield call(() => commentService.editComment(id, contentComment));      
+        const { data, status } = yield call(() => commentService.editComment(id, contentComment));  
+        console.log(status);
+        console.log(data)    
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
-            console.log(status);
+            
+            openNotificationWithIcon("success", "Edit Comment", "Edit comment successfully !!!")
             yield put({
 
                 type: "GET_ALL_COMMENTS_SAGA", 
                 taskId
             })
-          
             yield put ({
                 type : "GET_TASK_DETAIL_SAGA", 
                 taskId : taskId
@@ -91,12 +96,16 @@ function* editACommentSaga(action) {
             yield put ({
                 type : "GET_PROJECT_DETAIL_SAGA", 
                 id : projectId
-            })
-            
+            }) 
         }
     } catch (err) {
+        openNotificationWithIcon("warning", "Edit Comment", "Edit comment failed !!!")
         console.log(err.response.data);
     }
+    yield put ({
+        type: "CANCEL_EDIT_COMMENT", 
+        idComment : id
+    })
     yield put({
         type: HIDE_LOADING
     })

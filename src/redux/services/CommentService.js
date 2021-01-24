@@ -12,6 +12,7 @@ export class CommentService extends BaseService{
     }
     editComment = (id, contentComment) => {
         return this.put(`Comment/updateComment?id=${id}&contentComment=${contentComment}`)
+       
     }
     deleteComment = (id) => {
         this.delete(`Comment/deleteComment?idComment=${id}`)

@@ -11,7 +11,7 @@ export default function ModalCyberBugs() {
     const { arrPriority } = useSelector(state => state.PriorityReducer);
     const { arrTaskType } = useSelector(state => state.TaskTypeReducer);
     const {projectDetail} = useSelector(state => state.ProjectReducer); 
-    const {openEditor} = useSelector(state => state.TaskReducer); 
+    const {arrComment} = useSelector(state => state.CommentReducer) 
     const [historyContent, setHistoryContent] = useState(taskDetailModal.description);
     const [content, setContent] = useState(taskDetailModal.description);
     const [comment, setComment] = useState('');
@@ -255,24 +255,23 @@ export default function ModalCyberBugs() {
                                             <div className="lastest-comment">
                                                 <div className="comment-item">
                                                     <div className="display-comment">
-                                                            {taskDetailModal.lstComment?.map((item, index) => {
-                                                              let currentAuthor = item.user?.name; 
-                                                                 
+                                                            {arrComment?.map((item, index) => {
+                                                           
+                                                              
                                                                 return <div key={index} className="row my-3">
                                                                 <div className="col-1">
                                                                 <div className="avatar">
-                                                                         <img src={item.user?.avatar} alt="hinhAnh"/>
-                                                                       
+                                                                         <img src={item.user?.avatar} alt="hinhAnh"/>       
                                                                 </div>
                                                                 </div>
                                                                 <div className = "col-8">
                                                                 <p style={{ marginBottom: 5 }}>
                                                                         {item.user?.name}
                                                                     </p>
-                         {openEditor ?  <div>
+                         {item?.openEditor ?  <div>
                      <Editor
                     name="commentEdit"
-                    initialValue ='Edit a comment'
+                    initialValue ={item.contentComment}
                     init={{
                         // selector: `comment-${item.id}`,
                         height: 150,
@@ -281,33 +280,39 @@ export default function ModalCyberBugs() {
                         plugins: [
                             'advlist autolink lists link image charmap print preview anchor',
                             'searchreplace visualblocks code fullscreen',
-                            'insertdatetime media table paste code help wordcount paste tinycomments'
+                            'insertdatetime media table paste code help wordcount'
                         ],
-                        menu: {
-    tc: {
-      title: 'TinyComments',
-      items: 'addcomment showcomments deleteallconversations'
-    }
-  },
-  tinycomments_mode: 'embedded',
-  tinycomments_author: 'Author',
+                        
                         toolbar:
                             'undo redo | formatselect | bold italic backcolor | \
                             alignleft aligncenter alignright alignjustify | \
                             bullist numlist outdent indent | removeformat | help',
-                            tinycomments_mode: 'embedded',
-                            tinycomments_author: currentAuthor,
+                        
                         }}
                         onEditorChange={(content, editor) => {
                             // const jsxContent = ReactHtmlParser(content);
                             setComment(content); 
                         }} />
                         <div className="btn-edit-comment">
-                            <button className = "button">Save Comment</button>
-                            <button className = "button">Cancel Comment</button>
+                            <button className = "button" onClick = {() => {
+                                dispatch({
+                                    type: "EDIT_A_COMMENT_SAGA", 
+                                    id : item.id, 
+                                    contentComment: comment, 
+                                    projectId: taskDetailModal.projectId, 
+                                    taskId: taskDetailModal.taskId
+                                })
+                            }}>Save Comment</button>
+                            <button className = "button" onClick={()=>{            
+                   dispatch({
+                       type: "CANCEL_EDIT_COMMENT",
+                       idComment: item.id
+                   })
+               }}>Cancel Comment</button>
                         </div>
                  </div>: <div> {ReactHtmlParser(item?.contentComment)}
                  <span style={{ color: '#444422' }} onClick={()=>{
+                   
                                                                     dispatch({
                                                                         type: "OPEN_EDIT_COMMENT",
                                                                         id: item.id

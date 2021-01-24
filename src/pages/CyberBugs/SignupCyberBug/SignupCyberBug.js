@@ -57,10 +57,11 @@ const SignupCyberBugsWithFormik = withFormik({
 
     }),  
     handleSubmit: (values, {props,  setSubmitting }) => {       
-        console.log("values", values);
+
         props.dispatch({
             type: "USER_SIGN_UP_SAGA",
-            signUpData : values
+            signUpData : values,
+       
         })
     },
   })(SignupCyberBug); 

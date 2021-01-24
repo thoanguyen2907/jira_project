@@ -2,13 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Table, Tag, Space, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import FormEditUser from '../../../components/Form/FormEditUser/FormEditUser';
+import { USER_LOGIN } from '../../../util/constants/settingSystem';
+import FormCreateUser from '../../../components/Form/FormCreateUser/FormCreateUser';
 
 
 export default function UserManagement() {
     const arrAllUser = useSelector(state => state.UserLoginCyberBugsReducer.arrAllUser);
     const [keyWord, setKeyWord] = useState('');
     const dispatch = useDispatch(); 
-
+    let userLoginInFo = {}; 
+    if(localStorage.getItem(USER_LOGIN)){
+      userLoginInFo = JSON.parse(localStorage.getItem(USER_LOGIN)); 
+  }
+  
     useEffect(()=>{
         dispatch ({
           type: "GET_ALL_USERS_SAGA", 
@@ -71,7 +77,20 @@ export default function UserManagement() {
          
     return (
         <div className="container-fluid mt-5">
-        <h5>Create User</h5>
+        <div className="container-fluid justify-content-end d-flex">
+          <h5 className="mx-3"> Hello {userLoginInFo.name} </h5>
+          <img src={userLoginInFo.avatar} alt={userLoginInFo.name} style={{width: "30px", height: "30px", borderRadius:"50%"}}/>
+        </div>
+        <button className="btn btn-primary my-4"
+        onClick = {() => {
+          dispatch({
+            type: "OPEN_FORM_CREATE_USER", 
+            Component : <FormCreateUser/>, 
+           title : "Create a new user form"
+          })
+          
+        }}
+        >Create User</button>
             <div className="d-flex  justify-content-between align-items-center">
                 <input type="text" className="form-control" name="search" style={{width: "80%"}} value={keyWord} 
                 onChange= {(e) => {
@@ -90,8 +109,9 @@ export default function UserManagement() {
                     type: "GET_ALL_USERS_SAGA", 
                     keyword : ''
                   })
+                  setKeyWord('')
                 }}
-                >Cancel</button>
+                >Reset</button>
             </div>
                <Table columns={columns}  rowKey={"userId"} dataSource={arrAllUser} />
         </div>

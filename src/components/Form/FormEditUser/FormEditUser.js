@@ -55,7 +55,6 @@ const editUserInfoForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: (props) => {
         const {userEditInfo} = props; 
-        console.log(userEditInfo)
         return {
             id:userEditInfo.userId ,
             name: userEditInfo.name, 

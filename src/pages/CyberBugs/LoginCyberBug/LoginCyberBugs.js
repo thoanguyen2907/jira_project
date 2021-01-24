@@ -32,12 +32,8 @@ import { siginCyberbugsAction } from '../../../redux/actions/CyberBugsAction';
                         type="password"
                         placeholder="password" />
                           <div className="text-danger">{errors.password}</div>
-                        <Button htmlType="submit" type="primary" className="my-3">Primary Button</Button>
-                        <div className="social">
-                    <Button type="primary" className="my-3" icon={ <FacebookOutlined />}></Button>
-                    <Button type="primary" className="my-3" icon={ <TwitterOutlined />}></Button>
-                    
-                    </div>
+                        <Button htmlType="submit" type="primary" className="my-3">Login</Button>
+                       
                     </div>
                 </div>
             </div>

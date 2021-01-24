@@ -30,7 +30,7 @@ const CommentReducer = (state = initialState, action) => {
           return { ...state }
 
           case "CANCEL_EDIT_COMMENT":
-              console.log(action)
+    
             let {idComment} = action;  
 
             let indexCancelCommentEdit = state.arrComment.findIndex(item => idComment === item.id);         

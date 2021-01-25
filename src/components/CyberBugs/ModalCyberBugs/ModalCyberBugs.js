@@ -4,6 +4,7 @@ import { CHANGE_ASSINGEES, CHANGE_TASK_MODAL, GET_ALL_PRIORITY_LIST_SAGA, GET_AL
 import ReactHtmlParser from "react-html-parser";
 import { Editor } from '@tinymce/tinymce-react'; 
 import { Select } from 'antd';
+import img1 from '../../../assets/img/download (1).jfif';
 
 export default function ModalCyberBugs() {
     const { taskDetailModal } = useSelector(state => state.TaskReducer);
@@ -206,7 +207,7 @@ export default function ModalCyberBugs() {
                                             <h6>Comment</h6>
                                             <div className="block-comment" style={{ display: 'flex' }}>
                                                 <div className="avatar">
-                                                    <img src={require("../../../assets/img/download (1).jfif")} alt="hinhAnh" />
+                                                    <img src={img1} alt="hinhAnh" />
                                                 </div>
                                 <form className="input-comment" onSubmit = {handleSubmit}>
                              <Editor
@@ -272,21 +273,16 @@ export default function ModalCyberBugs() {
                      <Editor
                     name="commentEdit"
                     initialValue ={item.contentComment}
-                    init={{
-                        // selector: `comment-${item.id}`,
+                    init={{  
                         height: 150,
                         menubar: false,
-                        hidden_input: false,
                         plugins: [
                             'advlist autolink lists link image charmap print preview anchor',
                             'searchreplace visualblocks code fullscreen',
-                            'insertdatetime media table paste code help wordcount'
-                        ],
-                        
+                            'insertdatetime media table paste code help'
+                        ],                     
                         toolbar:
-                            'undo redo | formatselect | bold italic backcolor | \
-                            alignleft aligncenter alignright alignjustify | \
-                            bullist numlist outdent indent | removeformat | help',
+                            'undo redo | styleselect | forecolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image | code',
                         
                         }}
                         onEditorChange={(content, editor) => {
@@ -305,7 +301,7 @@ export default function ModalCyberBugs() {
                             }}>Save Comment</button>
                             <button className = "button" onClick={()=>{            
                    dispatch({
-                       type: "CANCEL_EDIT_COMMENT",
+                       type: "CLOSE_EDIT_COMMENT",
                        idComment: item.id
                    })
                }}>Cancel Comment</button>
@@ -428,18 +424,7 @@ export default function ModalCyberBugs() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="reporter">
-                                            <h6>REPORTER</h6>
-                                            <div style={{ display: 'flex' }} className="item">
-                                                <div className="avatar">
-                                                    <img src={require("../../../assets/img/download (1).jfif")} alt="hinhAnh" />
-                                                </div>
-                                                <p className="name">
-                                                    Pickle Rick
-                    <i className="fa fa-times" style={{ marginLeft: 5 }} />
-                                                </p>
-                                            </div>
-                                        </div>
+                                       
                                         <div className="priority" name = "priorityId" style={{ marginBottom: 20 }}>
                                             <h6>PRIORITY</h6>
                                             <select name="priorityId" className="form-control" value={taskDetailModal.priorityId} onChange={(e) => {

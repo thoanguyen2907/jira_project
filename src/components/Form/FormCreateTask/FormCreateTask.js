@@ -68,7 +68,8 @@ for (let i = 10; i < 36; i++) {
 
     const children = [];
     return (
-        <div className="container">          
+        <div className="container">  
+          
             <div className="form-group" onSubmit = {handleSubmit}>
                 <p>Project</p>
                 <select name="projectId" className="form-control" onChange =  {(e)=>{
@@ -231,13 +232,13 @@ const createTaskForm = withFormik({
         let {arrProject,arrStatus, arrTaskType, arrPriority} = props; 
 
         if(arrProject.length > 0) {
-            console.log(arrProject[0]?.id);
             props.dispatch({
                 type: GET_USER_BY_PROJECT_ID_SAGA, 
                 idProject : arrProject[0]?.id
             })
         }
         return {
+    
             taskName: '',
             description: '',
             statusId: arrStatus[0]?.statusId,

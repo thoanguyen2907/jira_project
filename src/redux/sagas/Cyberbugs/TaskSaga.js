@@ -4,7 +4,7 @@ import { STATUSCODE } from "../../../util/constants/settingSystem";
 import { DISPLAY_LOADING, HIDE_LOADING } from '../../constants/Loading/LoadingConst';
 import { openNotificationWithIcon } from "../../../util/Notification/notificationCyberbugs";
 import { history } from "../../../util/history/history";
-import { GET_ALL_PROJECT_SAGA, UPDATE_TASK_SAGA, HANDLE_CHANGE_POST_API, CHANGE_TASK_MODAL, CHANGE_ASSINGEES, REMOVE_USER_ASSIGN } from "../../constants/Cyberbugs/Cyberbugs";
+import { GET_ALL_PROJECT_SAGA, UPDATE_TASK_SAGA, HANDLE_CHANGE_POST_API, CHANGE_TASK_MODAL, CHANGE_ASSINGEES, REMOVE_USER_ASSIGN, CLOSE_DRAWER, GET_TASK_DETAIL_REDUCER, GET_TASK_DETAIL_SAGA, GET_PROJECT_DETAIL_SAGA, UPDATE_TASK_STATUS_SAGA } from "../../constants/Cyberbugs/Cyberbugs";
 import { taskService } from "../../services/TaskService";
 import { select } from "redux-saga/effects";
 
@@ -13,21 +13,20 @@ function * createTaskSaga (action){
     console.log(action);
     yield put({
         type: DISPLAY_LOADING
-    }); 
-    
+    });    
     yield delay (500);  
     try {     
         //Gọi api lấy dữ liệu về
         const {data,status} = yield call(() => taskService.createTask(action.taskObject)); 
-        console.log(status)
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
            console.log(status);
             openNotificationWithIcon('success', 'Get Project Detail', 'Create Task Successfully !!')
-            // yield put ({
-            //     type: "CREATE_TASK", 
-            //     taskObject : data.content
-            // })
+            yield put ({
+                type : GET_PROJECT_DETAIL_SAGA, 
+                id : action.taskObject.projectId
+            })
+          
         }
       
     } catch (err) {
@@ -35,7 +34,7 @@ function * createTaskSaga (action){
         console.log(err.response.data);
     } 
     yield put({
-        type: "CLOSE_DRAWER"
+        type: CLOSE_DRAWER
     })
     yield put({
         type: HIDE_LOADING
@@ -53,7 +52,7 @@ function * getTaskDetailSaga (action){
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
             yield put ({
-                type : "GET_TASK_DETAIL_REDUCER", 
+                type : GET_TASK_DETAIL_REDUCER, 
                 taskDetailModal: data.content
             })
         }
@@ -62,7 +61,7 @@ function * getTaskDetailSaga (action){
     } 
 }
 export function* theoDoiGetTaskDetailSaga(){
-    yield takeLatest("GET_TASK_DETAIL_SAGA", getTaskDetailSaga); 
+    yield takeLatest(GET_TASK_DETAIL_SAGA, getTaskDetailSaga); 
 }
 
 function * updateTaskStatusSaga (action){
@@ -73,11 +72,11 @@ function * updateTaskStatusSaga (action){
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
             yield put ({
-                type : "GET_PROJECT_DETAIL_SAGA", 
+                type : GET_PROJECT_DETAIL_SAGA, 
                 id : action.taskStatusUpdate.id
             })
             yield put ({
-                type : "GET_TASK_DETAIL_SAGA", 
+                type : GET_TASK_DETAIL_SAGA, 
                 taskId : action.taskStatusUpdate.taskId
             })
         }
@@ -86,7 +85,7 @@ function * updateTaskStatusSaga (action){
     } 
 }
 export function* theoDoiUpdateTaskStatusSaga(){
-    yield takeLatest("UPDATE_TASK_STATUS_SAGA", updateTaskStatusSaga); 
+    yield takeLatest(UPDATE_TASK_STATUS_SAGA, updateTaskStatusSaga); 
 }
 
 function * handleChangePostApi(action) {
@@ -147,11 +146,11 @@ try {
         
 
         yield put ({
-            type : "GET_PROJECT_DETAIL_SAGA", 
+            type : GET_PROJECT_DETAIL_SAGA, 
             id : taskUpdateApi.projectId
         })
         yield put ({
-            type : "GET_TASK_DETAIL_SAGA", 
+            type : GET_TASK_DETAIL_SAGA, 
             taskId : taskUpdateApi.taskId
         })
     }

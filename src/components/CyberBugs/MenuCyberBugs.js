@@ -1,12 +1,14 @@
 import React from 'react';
-import { NavLink, Route, Switch,Router } from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
+import img1 from '../../assets/img/download (1).jfif';
+
 const MenuCyberBugs = () => {
     return (
         <>
             <div className="menu">
                 <div className="account">
                     <div className="avatar">
-                        <img src={require("../../assets/img/download (1).jfif")} alt="hinh anh" />
+                    <img src={img1} alt="123" />
                     </div>
                     <div className="account-info">
                         <p>CyberLearn.vn</p>

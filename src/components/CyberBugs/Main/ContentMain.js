@@ -36,7 +36,7 @@ export default function ContentMain(props) {
        {(provided) => {
            return  <div 
           
-           className="card" key = {index} style={{ width: '17rem', height: '25rem' }}>
+           className="card" key = {index} style={{ width: '17rem', height: 'auto' }}>
        <div className="card-header">
          {item.statusName}
 </div>

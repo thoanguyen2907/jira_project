@@ -4,6 +4,7 @@ import {  connect, useSelector,useDispatch } from 'react-redux';
 import * as Yup from 'yup'; 
 import { Input, Button } from 'antd';
 import { UserOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
+import { CREATE_A_USER, USER_SIGN_UP_SAGA } from '../../../redux/constants/Cyberbugs/Cyberbugs';
 const FormCreateUser = (props) => {
     const dispatch = useDispatch()
 
@@ -65,9 +66,9 @@ const createUserForm = withFormik({
     handleSubmit: (values, { props, setSubmitting }) => {
    
         props.dispatch({
-            type: "USER_SIGN_UP_SAGA",
+            type: USER_SIGN_UP_SAGA,
             signUpData : values,
-            actionType: "CREATE_A_USER"
+            actionType: CREATE_A_USER
         })
     },
 })(FormCreateUser);

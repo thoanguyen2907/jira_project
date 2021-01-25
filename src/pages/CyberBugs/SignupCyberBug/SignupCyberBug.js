@@ -4,6 +4,7 @@ import { Input, Button } from 'antd';
 import { UserOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
 import * as Yup from 'yup'; 
 import {connect} from 'react-redux';
+import { USER_SIGN_UP_SAGA } from '../../../redux/constants/Cyberbugs/Cyberbugs';
 
  function SignupCyberBug(props) {
     const {
@@ -59,7 +60,7 @@ const SignupCyberBugsWithFormik = withFormik({
     handleSubmit: (values, {props,  setSubmitting }) => {       
 
         props.dispatch({
-            type: "USER_SIGN_UP_SAGA",
+            type: USER_SIGN_UP_SAGA,
             signUpData : values,
        
         })

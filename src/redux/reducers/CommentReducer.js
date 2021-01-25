@@ -29,7 +29,7 @@ const CommentReducer = (state = initialState, action) => {
             state.arrComment = arrayCommentUpdate ; 
           return { ...state }
 
-          case "CANCEL_EDIT_COMMENT":
+          case "CLOSE_EDIT_COMMENT":
     
             let {idComment} = action;  
 

@@ -3,7 +3,7 @@ import { takeEvery } from 'redux-saga/effects';
 
 import { fork, take, call, takeLatest , put, delay } from 'redux-saga/effects';
 import axios from 'axios';
-import {ADD_USER_PROJECT_API, CLOSE_DRAWER, DELETE_USER_PROJECT_API, GET_LIST_PROJECT_SAGA, GET_USER_BY_PROJECT_ID, GET_USER_BY_PROJECT_ID_SAGA, USER_SIGNIN_API, USLOGIN} from './../../constants/Cyberbugs/Cyberbugs'; 
+import {ADD_USER_PROJECT_API, CLOSE_DRAWER, DELETE_USER_FROM_LIST_SAGA, DELETE_USER_PROJECT_API, EDIT_USER_INFO_SAGA, GET_ALL_USERS_SAGA, GET_ALL_USER_REDUCER, GET_LIST_PROJECT_SAGA, GET_USER_API, GET_USER_BY_PROJECT_ID, GET_USER_BY_PROJECT_ID_SAGA, GET_USER_SEARCH, USER_SIGNIN_API, USLOGIN} from './../../constants/Cyberbugs/Cyberbugs'; 
 import { cyberbugsService } from '../../services/CyberbugsService'; 
 import { DISPLAY_LOADING, HIDE_LOADING } from '../../constants/Loading/LoadingConst';
 import { STATUSCODE, TOKEN, USER_LOGIN } from '../../../util/constants/settingSystem';
@@ -50,7 +50,7 @@ export function * theoDoiSignin(){
         if(status === STATUSCODE.SUCCESS){
 
             yield put({
-                type: "GET_USER_SEARCH", 
+                type: GET_USER_SEARCH, 
                 listUserSearch: data.content
             })
         }
@@ -59,7 +59,7 @@ export function * theoDoiSignin(){
      }
  }
 export function * theoDoiGetUser(){
-    yield takeLatest("GET_USER_API", getUserSaga)
+    yield takeLatest(GET_USER_API, getUserSaga)
 }
 function * addUserProject(action){
     try {
@@ -117,8 +117,6 @@ export function * theoDoiGetUserByProjectId(){
 }
 
 function * getAllUserSaga(action){  
-
-
     yield put({
         type: DISPLAY_LOADING
     })
@@ -128,7 +126,7 @@ function * getAllUserSaga(action){
        
         if(status === STATUSCODE.SUCCESS){
            yield put ({
-            type: "GET_ALL_USER_REDUCER", 
+            type: GET_ALL_USER_REDUCER, 
             arrAllUser : data.content
         })
         }
@@ -141,7 +139,7 @@ function * getAllUserSaga(action){
 }
 
 export function * theoDoiGetAllUserSaga(){
-    yield takeLatest("GET_ALL_USERS_SAGA", getAllUserSaga)
+    yield takeLatest(GET_ALL_USERS_SAGA, getAllUserSaga)
 }
 
 
@@ -155,7 +153,8 @@ function * deleteUserFromListSaga(action){
         const {data, status} = yield call(()=> userService.deleteUserById(action.userId)) ; 
         if(status === STATUSCODE.SUCCESS){
            yield put ({
-            type: "GET_ALL_USERS_SAGA", 
+            type: GET_ALL_USERS_SAGA, 
+            keyword : ''
         })
         openNotificationWithIcon("success", "Delete User", "Delete User From List Successfully !!! ")
         }
@@ -169,12 +168,12 @@ function * deleteUserFromListSaga(action){
 }
 
 export function * theoDoiDeleteUserFromListSaga(){
-    yield takeLatest("DELETE_USER_FROM_LIST_SAGA",deleteUserFromListSaga)
+    yield takeLatest(DELETE_USER_FROM_LIST_SAGA,deleteUserFromListSaga)
 }
 
 
 function * editUserInfoSaga(action){  
-    console.log("action", action);
+   
     yield put({
         type: DISPLAY_LOADING
     })
@@ -183,7 +182,7 @@ function * editUserInfoSaga(action){
          const {data, status} = yield call(()=> userService.editUserInfo(action.userInfo)) ; 
          if(status === STATUSCODE.SUCCESS){
             yield put ({
-             type: "GET_ALL_USERS_SAGA", 
+             type: GET_ALL_USERS_SAGA, 
          })
          openNotificationWithIcon("success", "Edit User", "Edit User Info Successfully !!! ")
          }
@@ -201,7 +200,7 @@ function * editUserInfoSaga(action){
     
  }
 export function * theoDoiEditUserInfoSaga(){
-    yield takeLatest("EDIT_USER_INFO_SAGA",editUserInfoSaga)
+    yield takeLatest(EDIT_USER_INFO_SAGA,editUserInfoSaga)
 }
 
 

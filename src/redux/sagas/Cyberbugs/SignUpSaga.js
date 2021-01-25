@@ -3,7 +3,7 @@ import { signUpService, SignUpService } from "../../services/SignUpService";
 import { STATUSCODE } from "../../../util/constants/settingSystem";
 import {history} from '../../../util/history/history';
 import { openNotificationWithIcon } from "../../../util/Notification/notificationCyberbugs";
-import { CLOSE_DRAWER } from "../../constants/Cyberbugs/Cyberbugs";
+import { CLOSE_DRAWER, CREATE_A_USER, GET_ALL_USERS_SAGA, USER_SIGN_UP_SAGA } from "../../constants/Cyberbugs/Cyberbugs";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/Loading/LoadingConst";
 
 function* userSignUpSaga(action) {
@@ -18,12 +18,12 @@ function* userSignUpSaga(action) {
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
             openNotificationWithIcon('success', 'User SignUp', 'SignUp Successfully !!')
-            if(action.actionType === "CREATE_A_USER") {
+            if(action.actionTyp3e === CREATE_A_USER) {
                 yield put({
                     type: CLOSE_DRAWER
                 })
                 yield put({
-                    type: "GET_ALL_USERS_SAGA", 
+                    type: GET_ALL_USERS_SAGA, 
                     keyword: ''
                 })
             } else {
@@ -42,5 +42,5 @@ function* userSignUpSaga(action) {
 
 
 export function* theoDoiUserSignUpSaga() {
-    yield takeLatest("USER_SIGN_UP_SAGA", userSignUpSaga);
+    yield takeLatest(USER_SIGN_UP_SAGA, userSignUpSaga);
 }

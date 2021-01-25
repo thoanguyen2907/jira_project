@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormEditUser from '../../../components/Form/FormEditUser/FormEditUser';
 import { USER_LOGIN } from '../../../util/constants/settingSystem';
 import FormCreateUser from '../../../components/Form/FormCreateUser/FormCreateUser';
+import { DELETE_USER_FROM_LIST_SAGA, GET_ALL_USERS_SAGA, OPEN_FORM_CREATE_USER, OPEN_FORM_EDIT_USER_INFO, USER_EDIT_INFO_REDUCER } from '../../../redux/constants/Cyberbugs/Cyberbugs';
 
 
 export default function UserManagement() {
@@ -17,7 +18,7 @@ export default function UserManagement() {
   
     useEffect(()=>{
         dispatch ({
-          type: "GET_ALL_USERS_SAGA", 
+          type: GET_ALL_USERS_SAGA, 
           keyword : ''
         })
     }, [])
@@ -51,13 +52,13 @@ export default function UserManagement() {
             <Space size="middle">
               <Button style={{color: "#9254de"}} onClick={() => {
                 dispatch({
-                  type: "OPEN_FORM_EDIT_USER_INFO",
+                  type: OPEN_FORM_EDIT_USER_INFO,
                    title: "Edit User Info Form", 
                    Component : <FormEditUser/>,  
                 })
 
                 dispatch({
-                  type: "USER_EDIT_INFO_REDUCER", 
+                  type: USER_EDIT_INFO_REDUCER, 
                   userEditInfo : record
                 })
 
@@ -65,7 +66,7 @@ export default function UserManagement() {
               >Edit</Button>
               <Button style={{color: "#eb2f96"}} onClick = {()=>{
                 dispatch({
-                  type: "DELETE_USER_FROM_LIST_SAGA", 
+                  type: DELETE_USER_FROM_LIST_SAGA, 
                   userId : record.userId
                 })
               }}
@@ -84,14 +85,14 @@ export default function UserManagement() {
         <button className="btn btn-primary my-4"
         onClick = {() => {
           dispatch({
-            type: "OPEN_FORM_CREATE_USER", 
+            type: OPEN_FORM_CREATE_USER, 
             Component : <FormCreateUser/>, 
            title : "Create a new user form"
           })
           
         }}
         >Create User</button>
-            <div className="d-flex  justify-content-between align-items-center">
+            <div className="d-flex my-3 justify-content-between align-items-center">
                 <input type="text" className="form-control" name="search" style={{width: "80%"}} value={keyWord} 
                 onChange= {(e) => {
                   let {value} = e.target; 
@@ -99,14 +100,14 @@ export default function UserManagement() {
                 }} />
                 <button type="button" className="btn btn-primary" onClick = {()=>{
                   dispatch({
-                    type: "GET_ALL_USERS_SAGA", 
+                    type: GET_ALL_USERS_SAGA, 
                     keyword : keyWord
                   })
                 }}
                 >Search</button>
                   <button type="button" className="btn btn-primary" onClick = {()=>{
                   dispatch({
-                    type: "GET_ALL_USERS_SAGA", 
+                    type: GET_ALL_USERS_SAGA, 
                     keyword : ''
                   })
                   setKeyWord('')

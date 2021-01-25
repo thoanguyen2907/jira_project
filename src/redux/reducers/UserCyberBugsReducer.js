@@ -1,5 +1,5 @@
 import { USER_LOGIN } from "../../util/constants/settingSystem";
-import { GET_USER_BY_PROJECT_ID, GET_USER_SEARCH, USLOGIN } from "../constants/Cyberbugs/Cyberbugs";
+import { GET_ALL_USER_REDUCER, GET_USER_BY_PROJECT_ID, GET_USER_SEARCH, USER_EDIT_INFO_REDUCER, USLOGIN } from "../constants/Cyberbugs/Cyberbugs";
 
 let usLogin = {};
 
@@ -28,14 +28,14 @@ const stateDefault = {
         state.arrUser = action.arrUser; 
         return {...state}
 
-        case "GET_ALL_USER_REDUCER": 
+        case GET_ALL_USER_REDUCER: 
         state.arrAllUser = action.arrAllUser; 
 
         return {...state}
 
-        case "USER_EDIT_INFO_REDUCER": 
+        case USER_EDIT_INFO_REDUCER: 
         state.userEditInfo = action.userEditInfo; 
-        console.log("state.userEditInfo" , state.userEditInfo)
+    
         return {...state}
 
         default: return {...state}

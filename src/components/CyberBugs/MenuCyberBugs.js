@@ -8,7 +8,7 @@ const MenuCyberBugs = () => {
             <div className="menu">
                 <div className="account">
                     <div className="avatar">
-                    <img src={img1} alt="123" />
+                    <img src={require('../../assets/img/download (1).jfif').default} alt="123" />
                     </div>
                     <div className="account-info">
                         <p>CyberLearn.vn</p>

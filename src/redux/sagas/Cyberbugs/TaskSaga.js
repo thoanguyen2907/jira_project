@@ -10,7 +10,6 @@ import { select } from "redux-saga/effects";
 
 
 function * createTaskSaga (action){
-    console.log(action);
     yield put({
         type: DISPLAY_LOADING
     });    
@@ -20,11 +19,14 @@ function * createTaskSaga (action){
         const {data,status} = yield call(() => taskService.createTask(action.taskObject)); 
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
-           console.log(status);
             openNotificationWithIcon('success', 'Get Project Detail', 'Create Task Successfully !!')
             yield put ({
                 type : GET_PROJECT_DETAIL_SAGA, 
                 id : action.taskObject.projectId
+            })
+            yield put ({
+                type : GET_TASK_DETAIL_SAGA, 
+                taskId : data.content.taskId
             })
           
         }

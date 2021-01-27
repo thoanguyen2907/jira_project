@@ -29,7 +29,7 @@ export default class App extends Component {
         <CyberbugsTemplate exact path = "/projectmanagement" Component = {ProjectManagement}/>
         <CyberbugsTemplate exact path = "/projectdetail/:projectId" Component = {IndexCyberBugs}/>
         <CyberbugsTemplate exact path = "/admin/usermanagement" Component = {UserManagement}/>
-        <UserLoginTemplate exact path="/"  Component={LoginCyberBugs} />
+        <UserLoginTemplate exact path="/"  Component={SignupCyberBug} />
         <Route  path="*"  Component={PageNotFound} />      
       </Switch>
 

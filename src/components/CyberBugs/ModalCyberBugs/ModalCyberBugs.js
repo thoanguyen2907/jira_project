@@ -28,7 +28,12 @@ export default function ModalCyberBugs() {
             type: "GET_ALL_COMMENTS_SAGA", 
             taskId: taskDetailModal.taskId
         })
-    }, [taskDetailModal.taskId])
+    }, [taskDetailModal.taskId]);
+
+    // useEffect(() => {
+    //     setComment(comment)
+    // }, [comment]);
+
 
     // console.log('taskDetailModal', taskDetailModal);
 
@@ -257,7 +262,7 @@ export default function ModalCyberBugs() {
                                                 <div className="comment-item">
                                                     <div className="display-comment">
                                                             {arrComment?.map((item, index) => {
-                                                           
+                                                          
                                                               
                                                                 return <div key={index} className="row my-3">
                                                                 <div className="col-1">
@@ -270,7 +275,7 @@ export default function ModalCyberBugs() {
                                                                         {item.user?.name}
                                                                     </p>
                          {item?.openEditor ?  <div>
-                     <Editor
+                     {/* <Editor
                     name="commentEdit"
                     initialValue ={item.contentComment}
                     init={{  
@@ -288,13 +293,21 @@ export default function ModalCyberBugs() {
                         onEditorChange={(content, editor) => {
                             // const jsxContent = ReactHtmlParser(content);
                             setComment(content); 
-                        }} />
+                        }}                     
+                        /> */}
+                        <input type="text" className="form-control" name="contentComment"
+                         value = {comment}
+                         onChange = {(e)=>{
+                            let {value} = e.target; 
+                  
+                             setComment(value);
+                        }}/>
                         <div className="btn-edit-comment">
                             <button className = "button" onClick = {() => {
                                 dispatch({
                                     type: "EDIT_A_COMMENT_SAGA", 
                                     id : item.id, 
-                                    contentComment: comment, 
+                                    contentComment:comment, 
                                     projectId: taskDetailModal.projectId, 
                                     taskId: taskDetailModal.taskId
                                 })
@@ -308,11 +321,14 @@ export default function ModalCyberBugs() {
                         </div>
                  </div>: <div> {ReactHtmlParser(item?.contentComment)}
                  <span style={{ color: '#444422' }} onClick={()=>{
+                      console.log(item)
                    
                                                                     dispatch({
                                                                         type: "OPEN_EDIT_COMMENT",
-                                                                        id: item.id
+                                                                        id: item.id,    
+                                                                        contentComment: item.contentComment
                                                                     })
+                                                                    setComment(item.contentComment)
                                                                 }} >Edit</span>                       
                                                                 <span style={{ color: '#929398' }} className="ml-3"
                                                                onClick = {()=>{

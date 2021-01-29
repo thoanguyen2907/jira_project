@@ -1,9 +1,14 @@
 This is the Jira project cloned applied React + Redux + Redux Saga + Ant Design + Formik + Yup + Tinymce-react + react router-dom 
+Backend: c# (provided)
 
-To Login: 
-username: cyberlearn@gmail.com
+1. First, you need to sign up by fake  email, phone, username, password.
+2. Second, page re-render to login page => Please sign in by email and password you create before. 
+3. Explore jira clone by creating project, add users, delete user, create task, assign task to users , etc...
 
-password: 123456 
+Here is the illustration: 
+
+![](https://media.giphy.com/media/nvQsWZL7b6ZJ9EpqZa/giphy.gif)
+
 
 Features: 
 
@@ -37,9 +42,6 @@ Get All Task after edit/create.
 
 Validation. 
 
-Here is the illustration: 
-
-![](https://media.giphy.com/media/nvQsWZL7b6ZJ9EpqZa/giphy.gif)
 
 
 # Getting Started with Create React App

@@ -12,11 +12,13 @@ Here is the illustration:
 
 Features: 
 
-Use both React Hooks and React Class 
+Use both React Hooks + React Class Component + React Functional Component  
 
 Apply HOC to reusable components 
 
 Call Api , handle asynchoronism by Redux Saga. 
+
+New UI with Ant Design
 
 Create Project ||  Edit Project || Delete Project 
 
@@ -41,6 +43,9 @@ Drag and Drop task into different category.
 Get All Task after edit/create. 
 
 Validation. 
+
+
+
 
 
 

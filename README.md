@@ -32,10 +32,6 @@ Create Task  || Edit Task || Delete Task
 
 Assign member to task, Delete member 
 
-Assign member to task 
-
-Assign member to task, 
-
 Estimate time, select status, priority 
 
 Drag and Drop task into different category. 

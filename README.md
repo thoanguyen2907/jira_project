@@ -7,7 +7,7 @@ Backend: c# (provided)
 
 Here is the illustration: 
 
-![](https://media.giphy.com/media/nvQsWZL7b6ZJ9EpqZa/giphy.gif)
+![](https://media.giphy.com/media/MbC21ATs6iaKH8p25K/giphy.gif)
 
 
 Features: 

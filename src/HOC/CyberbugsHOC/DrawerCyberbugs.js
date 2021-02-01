@@ -41,7 +41,7 @@ const DrawerCyberbugs = (props) => {
               <Button onClick={onClose} style={{ marginRight: 8 }}>
                 Cancel
               </Button>
-              <Button onClick={callBackSubmit} type="primary">
+              <Button onClick={callBackSubmit} type="submit">
                 Submit
               </Button>
             </div>

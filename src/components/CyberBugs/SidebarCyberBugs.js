@@ -39,7 +39,7 @@ return (
                         title: "Create Task"
                     })
                 }} >
-                    <span className="mb-2">Create issue</span>
+                    <span className="mb-2">Create New Task</span>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<SearchOutlined style={{ fontSize: 20 }} />}>
                     Search

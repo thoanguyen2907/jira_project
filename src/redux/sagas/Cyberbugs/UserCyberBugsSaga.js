@@ -64,7 +64,7 @@ export function * theoDoiGetUser(){
 function * addUserProject(action){
     try {
         const {data, status} = yield call(()=> userService.assignUserProject(action.userProject)); 
-        console.log(data);
+    
         if(status === STATUSCODE.SUCCESS){
            yield put ({
             type: GET_LIST_PROJECT_SAGA
@@ -79,10 +79,9 @@ export function * theoDoiAddUser(){
 }
 
 function * deleteUserProject(action){
-    console.log(action);
+ 
     try {
         const {data, status} = yield call(()=> userService.deleteUserFromProject(action.userProject)) ; 
-        console.log(data);
         if(status === STATUSCODE.SUCCESS){
            yield put ({
             type: GET_LIST_PROJECT_SAGA
@@ -98,7 +97,7 @@ export function * theoDoiDeleteUserProject(){
 
 
 function * getUserByProjectID(action){
-    console.log(action);
+    
     try {
         const {data, status} = yield call(()=> userService.getUserByProjectId(action.idProject)) ; 
        
@@ -183,6 +182,7 @@ function * editUserInfoSaga(action){
          if(status === STATUSCODE.SUCCESS){
             yield put ({
              type: GET_ALL_USERS_SAGA, 
+             keyword : ''
          })
          openNotificationWithIcon("success", "Edit User", "Edit User Info Successfully !!! ")
          }

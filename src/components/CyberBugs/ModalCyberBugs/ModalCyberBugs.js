@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { CHANGE_ASSINGEES, CHANGE_TASK_MODAL, GET_ALL_PRIORITY_LIST_SAGA, GET_ALL_STATUS_SAGA, GET_ALL_TYPE_TASK_SAGA, HANDLE_CHANGE_POST_API, REMOVE_USER_ASSIGN } from '../../../redux/constants/Cyberbugs/Cyberbugs';
+import { CHANGE_ASSINGEES, CHANGE_TASK_MODAL, CLOSE_EDIT_COMMENT, DELETE_A_COMMENT_SAGA, EDIT_A_COMMENT_SAGA, GET_ALL_PRIORITY_LIST_SAGA, GET_ALL_STATUS_SAGA, GET_ALL_TYPE_TASK_SAGA, HANDLE_CHANGE_POST_API, OPEN_EDIT_COMMENT, REMOVE_USER_ASSIGN } from '../../../redux/constants/Cyberbugs/Cyberbugs';
 import ReactHtmlParser from "react-html-parser";
 import { Editor } from '@tinymce/tinymce-react'; 
 import { Select } from 'antd';
@@ -29,13 +29,6 @@ export default function ModalCyberBugs() {
             taskId: taskDetailModal.taskId
         })
     }, [taskDetailModal.taskId]);
-
-    // useEffect(() => {
-    //     setComment(comment)
-    // }, [comment]);
-
-
-    // console.log('taskDetailModal', taskDetailModal);
 
     const renderDescription = () => {
         const jsxDescription = ReactHtmlParser(taskDetailModal.description);
@@ -70,11 +63,7 @@ export default function ModalCyberBugs() {
                         name : "description", 
                         value : content
                     })
-                    //  dispatch({
-                    //     type : CHANGE_TASK_MODAL, 
-                    //     name : "description", 
-                    //     value : content
-                    // })
+                    
                     setVisibleEditor(false)
                 }}
                 >Save</button>
@@ -181,34 +170,13 @@ export default function ModalCyberBugs() {
                                 <div className="row">
                                     <div className="col-8">
                                         <p className="issue">This is an issue of type: Task.</p>
-                                        <div className="description">
-                                            <p>Description</p>
+                                        <div className="description my-4">
+                                       
+                                            <h5 className="text-danger">Description</h5>
                                             {renderDescription()}
                                         </div>
-                                        <div style={{ fontWeight: 500, marginBottom: 10 }}>
-                                            Jira Software (software projects) issue types:
-              </div>
-                                        <div className="title">
-                                            <div className="title-item">
-                                                <h3>BUG <i className="fa fa-bug" /></h3>
-                                                <p>
-                                                    A bug is a problem which impairs or prevents the
-                                                    function of a product.
-                  </p>
-                                            </div>
-                                            <div className="title-item">
-                                                <h3>STORY <i className="fa fa-book-reader" /></h3>
-                                                <p>
-                                                    A user story is the smallest unit of work that needs to
-                                                    be done.
-                  </p>
-                                            </div>
-                                            <div className="title-item">
-                                                <h3>TASK <i className="fa fa-tasks" /></h3>
-                                                <p>A task represents work that needs to be done</p>
-                                            </div>
-                                        </div>
-                                        <div className="comment">
+                                      
+                                        <div className="comment my-3">
                                             <h6>Comment</h6>
                                             <div className="block-comment" style={{ display: 'flex' }}>
                                                 <div className="avatar">
@@ -302,29 +270,28 @@ export default function ModalCyberBugs() {
                   
                              setComment(value);
                         }}/>
-                        <div className="btn-edit-comment">
-                            <button className = "button" onClick = {() => {
+                        <div className="btn-edit-comment mt-2">
+                            <button className = "btn btn-primary nr-2" onClick = {() => {
                                 dispatch({
-                                    type: "EDIT_A_COMMENT_SAGA", 
+                                    type: EDIT_A_COMMENT_SAGA, 
                                     id : item.id, 
                                     contentComment:comment, 
                                     projectId: taskDetailModal.projectId, 
                                     taskId: taskDetailModal.taskId
                                 })
                             }}>Save Comment</button>
-                            <button className = "button" onClick={()=>{            
+                            <button className = "btn btn-success ml-2" onClick={()=>{            
                    dispatch({
-                       type: "CLOSE_EDIT_COMMENT",
+                       type: CLOSE_EDIT_COMMENT,
                        idComment: item.id
                    })
                }}>Cancel Comment</button>
                         </div>
                  </div>: <div> {ReactHtmlParser(item?.contentComment)}
                  <span style={{ color: '#444422' }} onClick={()=>{
-                      console.log(item)
                    
                                                                     dispatch({
-                                                                        type: "OPEN_EDIT_COMMENT",
+                                                                        type: OPEN_EDIT_COMMENT,
                                                                         id: item.id,    
                                                                         contentComment: item.contentComment
                                                                     })
@@ -333,7 +300,7 @@ export default function ModalCyberBugs() {
                                                                 <span style={{ color: '#929398' }} className="ml-3"
                                                                onClick = {()=>{
                                                                    dispatch({
-                                                                       type: "DELETE_A_COMMENT_SAGA", 
+                                                                       type: DELETE_A_COMMENT_SAGA, 
                                                                        id: item.id, 
                                                                        taskId : taskDetailModal?.taskId,
                                                                        projectId: taskDetailModal?.projectId

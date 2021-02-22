@@ -9,6 +9,7 @@ import { DELETE_USER_FROM_LIST_SAGA, GET_ALL_USERS_SAGA, OPEN_FORM_CREATE_USER, 
 
 export default function UserManagement() {
     const arrAllUser = useSelector(state => state.UserLoginCyberBugsReducer.arrAllUser);
+    console.log(arrAllUser); 
     const [keyWord, setKeyWord] = useState('');
     const dispatch = useDispatch(); 
     let userLoginInFo = {}; 
@@ -34,6 +35,16 @@ export default function UserManagement() {
           title: 'UserId',
           dataIndex: 'userId',
           key: 'userId',
+        },
+        {
+          title: 'Email',
+          dataIndex: 'email',
+          key: 'email',
+        },
+        {
+          title: 'Phone',
+          dataIndex: 'phoneNumber',
+          key: 'phoneNumber',
         },
         {
           title: 'Avatar',

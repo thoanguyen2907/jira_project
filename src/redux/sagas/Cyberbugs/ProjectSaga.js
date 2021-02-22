@@ -20,7 +20,6 @@ function* createProjectSaga(action) {
         const { data, status } = yield call(() => cyberbugsService.createProjectAuthorization(action.newProject));
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
-            console.log(status)
             history.push('/projectmanagement');     
         }
     } catch (err) {

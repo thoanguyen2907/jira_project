@@ -170,7 +170,7 @@ for (let i = 10; i < 36; i++) {
                         <div className="row" style={{marginTop:5}}>
                             <div className="col-6">
                                 <p>Time spent</p>
-                                <input type="number" defaultValue="0" min="0" 
+                                <input type="number"  min="0" 
                                 className="form-control" name="timeTrackingSpent" 
                                 value = {values.timeTrackingSpent}
                                 onChange={(e)=>{
@@ -184,7 +184,7 @@ for (let i = 10; i < 36; i++) {
 
                             <div className="col-6">
                                 <p>Time remaining</p>
-                                <input type="number" defaultValue="0" min="0" className="form-control" name="timeTrackingRemaining" 
+                                <input type="number"  min="0" className="form-control" name="timeTrackingRemaining" 
                                 value = {values.timeTrackingRemaining} 
                                 onChange={(e)=>{
                                     setTimetracking({

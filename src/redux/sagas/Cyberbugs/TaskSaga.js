@@ -10,7 +10,6 @@ import { select } from "redux-saga/effects";
 
 
 function * createTaskSaga (action){
-    console.log(action);
     yield put({
         type: DISPLAY_LOADING
     });    
@@ -20,11 +19,14 @@ function * createTaskSaga (action){
         const {data,status} = yield call(() => taskService.createTask(action.taskObject)); 
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
-           console.log(status);
             openNotificationWithIcon('success', 'Get Project Detail', 'Create Task Successfully !!')
             yield put ({
                 type : GET_PROJECT_DETAIL_SAGA, 
                 id : action.taskObject.projectId
+            })
+            yield put ({
+                type : GET_TASK_DETAIL_SAGA, 
+                taskId : data.content.taskId
             })
           
         }
@@ -110,15 +112,6 @@ switch(action.actionType) {
 
     };
     break;
-    // case CHANGE_ASSINGEES: { 
-    //     let {userSelect} = action; 
-    //     console.log("userSelect", userSelect);
-    //     yield put ({
-    //         type: CHANGE_ASSINGEES, 
-    //         userSelect
-    //     })
-    // }
-    // break; 
     case REMOVE_USER_ASSIGN : {
         let {userId} = action; 
         yield put ({
@@ -134,7 +127,6 @@ switch(action.actionType) {
 //Save qua api updateTaskSaga 
 //lấy dữ liệu từ state.taskDetailModal 
 let {taskDetailModal} = yield select(state => state.TaskReducer); 
-console.log("taskDetailModal sau khi thay đỗi",  taskDetailModal);
 //biến đổi dữ liệu state.taskDetailModal thành dữ liệu api cần 
 const listUserAsign = taskDetailModal.assigness?.map((user, index) => {
     return user.id

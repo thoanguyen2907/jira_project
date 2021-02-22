@@ -18,11 +18,13 @@ const CommentReducer = (state = initialState, action) => {
           }
 
           case "OPEN_EDIT_COMMENT":
-            let {id} = action;  
+            let {id, contentComment} = action;  
             let indexOpenCommentEdit = state.arrComment.findIndex(item => id === item.id);         
           let arrayCommentUpdate = [...state.arrComment]; 
             if(indexOpenCommentEdit !== -1){
+              console.log(arrayCommentUpdate[indexOpenCommentEdit]); 
                 arrayCommentUpdate[indexOpenCommentEdit].openEditor =  true; 
+                arrayCommentUpdate[indexOpenCommentEdit].contentComment = contentComment; 
             } else {
                 arrayCommentUpdate[indexOpenCommentEdit].openEditor  = false;             
             }

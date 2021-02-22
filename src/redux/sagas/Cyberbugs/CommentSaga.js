@@ -1,7 +1,7 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { STATUSCODE } from "../../../util/constants/settingSystem";
 import { openNotificationWithIcon } from "../../../util/Notification/notificationCyberbugs";
-import { CANCEL_EDIT_COMMENT, DELETE_A_COMMENT_SAGA, EDIT_A_COMMENT_SAGA, GET_ALL_COMMENTS_REDUCER, GET_ALL_COMMENTS_SAGA, GET_PROJECT_DETAIL_SAGA, GET_TASK_DETAIL_SAGA, INSERT_A_COMMENT_SAGA } from "../../constants/Cyberbugs/Cyberbugs";
+import { CANCEL_EDIT_COMMENT, CLOSE_EDIT_COMMENT, DELETE_A_COMMENT_SAGA, EDIT_A_COMMENT_SAGA, GET_ALL_COMMENTS_REDUCER, GET_ALL_COMMENTS_SAGA, GET_PROJECT_DETAIL_SAGA, GET_TASK_DETAIL_SAGA, INSERT_A_COMMENT_SAGA } from "../../constants/Cyberbugs/Cyberbugs";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/Loading/LoadingConst";
 import { commentService } from "../../services/CommentService";
 
@@ -100,7 +100,7 @@ function* editACommentSaga(action) {
         console.log(err.response.data);
     }
     yield put ({
-        type: "CLOSE_EDIT_COMMENT", 
+        type: CLOSE_EDIT_COMMENT, 
         idComment : id
     })
     yield put({

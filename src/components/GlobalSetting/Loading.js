@@ -8,8 +8,8 @@ export default function Loading() {
     if(isLoading){
         return (
             <div className={styleLoading.loading}>
-                {/* <img src={require("../../assets/img/loading.gif")} alt="loading"/> */}
-                <img src={bgImg} alt="loading"/>
+                <img src={require("../../assets/img/loading.gif").default} alt="loading"/>
+                {/* <img src={bgImg} alt="loading"/> */}
             </div>
         )
     } else {

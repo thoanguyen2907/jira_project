@@ -31,8 +31,8 @@ function FormEditUser(props) {
                         disabled/>
             </div>
             <div className="form-group">
-                        <p className="font-weight-bold">Password</p>
-                        <input type="passWord" name="passWord" className="form-control my-3" value={values.passWord} 
+                        <p className="font-weight-bold">Email</p>
+                        <input type="email" name="email" className="form-control my-3" value={values.email} 
                         onChange = {handleChange}/>
             </div>
             <div className="form-group">
@@ -55,11 +55,12 @@ const editUserInfoForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: (props) => {
         const {userEditInfo} = props; 
+        console.log(userEditInfo); 
         return {
             id:userEditInfo.userId ,
             name: userEditInfo.name, 
-            passWord:'' , 
-            phoneNumber: ''
+            email:userEditInfo.email, 
+            phoneNumber: userEditInfo.phoneNumber
         }
     },
     validationSchema: Yup.object().shape({

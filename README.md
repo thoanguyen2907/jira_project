@@ -1,3 +1,4 @@
+Live demo: http://jira-project-management-thoa-nguyen.surge.sh/
 This is the Jira project cloned applied React + Redux + Redux Saga + Ant Design + Formik + Yup + Tinymce-react + react router-dom 
 Backend: c# (provided)
 
